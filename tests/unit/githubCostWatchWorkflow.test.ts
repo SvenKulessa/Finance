@@ -33,10 +33,10 @@ describe('GitHub cost watch workflow contract', () => {
   });
 
   it('fails closed without an initialized billing report path, without an unbound shell error', () => {
-    const step = yaml.split('      - name: 45.000-Minuten-Hard-Blocker mit GitHub-Issue synchronisieren')[1];
-    expect(step).toBeDefined();
-    const run = step.split('        run: |\n')[1]?.split('\n      - name:')[0];
-    expect(run).toBeDefined();
+    const step = yaml.split('      - name: 45.000-Minuten-Hard-Blocker mit GitHub-Issue synchronisieren')[1] ?? '';
+    expect(step).not.toBe('');
+    const run = step.split('        run: |\n')[1]?.split('\n      - name:')[0] ?? '';
+    expect(run).not.toBe('');
     const script = run.split('\n').map((line: string) =>
       line.startsWith('          ') ? line.slice(10) : line).join('\n');
     expect(script).toContain('report_path="${CAPITAL_AI_GITHUB_COST_WATCH_REPORT_PATH:-}"');
