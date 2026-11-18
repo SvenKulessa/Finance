@@ -87,7 +87,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -f "${CAPITAL_AI_GITHUB_COST_WATCH_REPORT_PATH}" || {
+          report_path="${CAPITAL_AI_GITHUB_COST_WATCH_REPORT_PATH:-}"
+          test -n "$report_path" && test -f "$report_path" || {
             echo "::error::Cost-Watch-Report fehlt; Blocker-Zustand kann nicht sicher synchronisiert werden."
             exit 1
           }
